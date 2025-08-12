@@ -8,7 +8,7 @@ D.-H. Lee, S.-J. Kim, H. Kong, and S.-W. Lee, "Train Once, Transfer Anywhere: To
 
 ## Architecture
 
-|||
+|EEGMixer|EEGMixer Block|
 |:-:|:-:|
 |![Alt text](docs/SUPPLEMENTARY1.png)|![Alt text](docs/FIGURE1.png)|
 
