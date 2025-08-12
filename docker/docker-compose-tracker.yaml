@@ -1,0 +1,88 @@
+version: "3.3"
+
+services:
+  s3:
+    container_name: s3
+    image: minio/minio:RELEASE.2022-10-02T19-29-29Z.fips
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9090:9090"
+    environment:
+      - MINIO_ROOT_USER=${AWS_ACCESS_KEY_ID}
+      - MINIO_ROOT_PASSWORD=${AWS_SECRET_ACCESS_KEY}
+      - TZ=Asia/Seoul
+    command: server /data --console-address ":9090"
+    volumes:
+      - minio:/data
+
+  db:
+    container_name: db
+    image: postgres:14.2
+    restart: unless-stopped
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - TZ=Asia/Seoul
+    volumes:
+      - db:/var/lib/postgresql/data
+
+  dbadmin:
+    container_name: dbadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    ports:
+      - "5555:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin
+      - TZ=Asia/Seoul
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+
+  tracker:
+    container_name: tracker
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: mlflow.Dockerfile
+    depends_on:
+      - db
+      - s3
+    ports:
+      - ${MLFLOW_PORT}:${MLFLOW_PORT}
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - MLFLOW_S3_ENDPOINT_URL=http://s3:9000
+      - BACKEND=postgresql://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
+    entrypoint: >
+      /bin/bash -c "mlflow db upgrade $${BACKEND}; mlflow server --port ${MLFLOW_PORT} --host 0.0.0.0 \
+      --backend-store-uri $${BACKEND} \
+      --artifacts-destination s3://${AWS_BUCKET_NAME} \
+      --serve-artifacts"
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ### fill in with your local path to the db data
+  minio:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ### fill in with your local path to the db data
+  pgadmin:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: ### fill in with your local path to the db data

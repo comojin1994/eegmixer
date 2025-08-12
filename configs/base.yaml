@@ -1,0 +1,12 @@
+DB_PATH: "/opt/workspace/eegmixer/databases"
+CKPT_PATH: "/opt/hda/minio/checkpoints/eegmixer"
+HUGGINGFACE_PATH: "/opt/hda/minio/huggingface"
+
+mode: "cls" # "cls", "ssl"
+is_subject_independent: True
+
+GPU_NUM: "0"
+SEED: 42
+
+slack: True
+phase: "local"
