@@ -1,0 +1,8 @@
+WEIGHT_PATH: null
+
+model: "eegmixer"
+litmodel: "sam" # "base" # "pbs" # "sam"
+dataset: "bcic2a" # "bcic2a" # "bcic2b" # "zhou"
+
+experiment_name: "Default"
+msg: "Default"

@@ -1,0 +1,77 @@
+bcic2a:
+  EPOCHS: 300
+  batch_size: 64
+
+  lr: 0.003
+
+  dim: &bcic2a_dim 64
+  nhead: 4
+  nlayer: 3
+  num_experts: 16
+
+  sinusoidal_dim: 256
+  temporal_rope_dim: 1024
+  spatial_rope_dim: 1024
+
+  weight_decay: 0.5
+  dropout_rate: 0.05
+  rho: 0.1
+
+  cnn_layers:
+    [
+      [1, *bcic2a_dim, 125, 1],
+      [*bcic2a_dim, *bcic2a_dim, 8, 4],
+      [*bcic2a_dim, *bcic2a_dim, 4, 2],
+    ]
+
+bcic2b:
+  EPOCHS: 300
+  batch_size: 64
+
+  lr: 0.003
+
+  dim: &bcic2b_dim 64
+  nhead: 4
+  nlayer: 3
+  num_experts: 16
+
+  sinusoidal_dim: 256
+  temporal_rope_dim: 1024
+  spatial_rope_dim: 1024
+
+  weight_decay: 0.5
+  dropout_rate: 0.05
+  rho: 0.1
+
+  cnn_layers:
+    [
+      [1, *bcic2b_dim, 125, 1],
+      [*bcic2b_dim, *bcic2b_dim, 8, 4],
+      [*bcic2b_dim, *bcic2b_dim, 4, 2],
+    ]
+
+zhou:
+  EPOCHS: 300
+  batch_size: 64
+
+  lr: 0.003
+
+  dim: &zhou_dim 64
+  nhead: 4
+  nlayer: 3
+  num_experts: 16
+
+  sinusoidal_dim: 256
+  temporal_rope_dim: 1024
+  spatial_rope_dim: 1024
+
+  weight_decay: 0.5
+  dropout_rate: 0.05
+  rho: 0.01
+
+  cnn_layers:
+    [
+      [1, *zhou_dim, 125, 1],
+      [*zhou_dim, *zhou_dim, 8, 4],
+      [*zhou_dim, *zhou_dim, 4, 2],
+    ]

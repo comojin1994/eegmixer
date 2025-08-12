@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  torch-train:
+    container_name: torch-train
+    platform: linux/amd64
+    build:
+      dockerfile: py311-torch-train.Dockerfile
+    working_dir: /opt/workspace
+    runtime: nvidia
+    ports:
+      - "8888:8888"
+    volumes:
+      - ### fill in with your local path to the db data
+      - ### fill in with your local path to the db data
+      - /dev/shm:/dev/shm
