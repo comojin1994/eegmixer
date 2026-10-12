@@ -1,9 +1,9 @@
-# Train Once, Transfer Anywhere: Toward Device-Homogeneous MI-EEG Decoding
+# EEGMixer: Architecture-preserving Motor Imagery-EEG Decoding Across Heterogeneous Electrode Montages
 
 This repository is the official implementations of EEGMixer in pytorch-lightning style:
 
 ```text
-D.-H. Lee, S.-J. Kim, H. Kong, and S.-W. Lee, "Train Once, Transfer Anywhere: Toward Device-Homogeneous MI-EEG Decoding," 2025. (Under Review)
+D.-H. Lee, S.-J. Kim, H. Kong, and S.-W. Lee, "EEGMixer: Architecture-preserving Motor Imagery-EEG Decoding Across Heterogeneous Electrode Montages," 2026. (TBA)
 ```
 
 ## Architecture
